@@ -20,7 +20,11 @@ Also see the "related forum thread at the EE Forums":http://expressionengine.com
 
 h2. Changelog
 
-*1.1.1 (Sep 7, 2009)*
+*2.0 (July 11, 2010)*
+
+* EE2 Version [imagehat]
+
+1.1.1 (Sep 7, 2009)
 
 * Fixed some logic to help avoid "Undefined Offset" errors
 * General cleanup
