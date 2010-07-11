@@ -18,7 +18,7 @@ See README.textile
 
 $plugin_info = array(
   'pi_name'        => 'MD Eexcerpt',
-  'pi_version'     => '1.1.1',
+  'pi_version'     => '2.0',
   'pi_author'      => 'Ryan Masuga',
   'pi_author_url'  => 'http://masugadesign.com/',
   'pi_description' => 'Permits you to limit the number of words in some text. After stripping tags.',
@@ -36,13 +36,14 @@ Class Md_eexcerpt {
 
     function md_eexcerpt()
     {
-        global $TMPL, $FNS;
+        // get global instance
+		$this->EE =& get_instance();
 
-    $stop_after = ( ! $TMPL->fetch_param('stop_after')) ? '500' :  $TMPL->fetch_param('stop_after');
+    $stop_after = ( ! $this->EE->TMPL->fetch_param('stop_after')) ? '500' :  $this->EE->TMPL->fetch_param('stop_after');
     
-    $if_Exceeds = ( ! $TMPL->fetch_param('if_exceeds')) ? '500' :  $TMPL->fetch_param('if_exceeds');
-    $append = ( ! $TMPL->fetch_param('append')) ? '&hellip;' :  $TMPL->fetch_param('append');
-    $the_link = ( ! $TMPL->fetch_param('the_link')) ? '' :  $TMPL->fetch_param('the_link');
+    $if_Exceeds = ( ! $this->EE->TMPL->fetch_param('if_exceeds')) ? '500' :  $this->EE->TMPL->fetch_param('if_exceeds');
+    $append = ( ! $this->EE->TMPL->fetch_param('append')) ? '&hellip;' :  $this->EE->TMPL->fetch_param('append');
+    $the_link = ( ! $this->EE->TMPL->fetch_param('the_link')) ? '' :  $this->EE->TMPL->fetch_param('the_link');
     
     if ( ! is_numeric($stop_after))
       $stop_after = 500;
@@ -55,13 +56,12 @@ Class Md_eexcerpt {
       $if_Exceeds = $stop_after;
     }
                 
-    $this->return_data = $this->_dirty_work($TMPL->tagdata, $if_Exceeds, $stop_after, $the_link, $append);
+    $this->return_data = $this->_dirty_work($this->EE->TMPL->tagdata, $if_Exceeds, $stop_after, $the_link, $append);
     }
 
     
     function _dirty_work($str, $if_Exceeds = 500, $stop_after = 500, $the_link = "", $append="")
     {
-      global $TMPL;
       // strip out the tags first
       // http://us2.php.net/manual/en/function.strip-tags.php#68749
       $searchcrap = array('@<script[^>]*?>.*?</script>@si',  // Strip out javascript
